@@ -3,6 +3,7 @@ import sqlite3
 import random
 from datetime import datetime
 import os
+import subprocess
 
 app = Flask(__name__)
 
@@ -918,7 +919,9 @@ def reset_tournament():
 
 
 if __name__ == '__main__':
-    # Render передает порт через переменную окружения PORT
+    # Запускаем основной файл бота в фоновом режиме
+    subprocess.Popen(["python", "main.py"])
+    
     port = int(os.environ.get('PORT', 5001))
-    # Хост обязательно 0.0.0.0, чтобы сервер принимал внешние запросы
     app.run(host='0.0.0.0', port=port)
+
