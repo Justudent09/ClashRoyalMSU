@@ -2,6 +2,7 @@ from flask import Flask, jsonify, render_template_string, request
 import sqlite3
 import random
 from datetime import datetime
+import os
 
 app = Flask(__name__)
 
@@ -915,11 +916,9 @@ def reset_tournament():
     except Exception as e:
         return jsonify({'success': False, 'error': str(e)})
 
+
 if __name__ == '__main__':
-    init_tournament_table()
-    print("=" * 50)
-    print("🔐 Админ-панель запущена!")
-    print("📊 Страница участников: http://localhost:5001/")
-    print("🏆 Турнирная сетка: http://localhost:5001/bracket")
-    print("=" * 50)
-    app.run(debug=True, host='127.0.0.1', port=5001, threaded=True)
+    # Render передает порт через переменную окружения PORT
+    port = int(os.environ.get('PORT', 5001))
+    # Хост обязательно 0.0.0.0, чтобы сервер принимал внешние запросы
+    app.run(host='0.0.0.0', port=port)
